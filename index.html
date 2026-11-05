@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sistema de gerenciamento de ministros e celebrações.">
+    <title>Sistema de Ministros</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <main id="app">
+
+        <!-- TELA DE LOGIN -->
+        <section id="login-screen" class="auth-container">
+            <div class="brand">
+                <h1>Sistema de Ministros</h1>
+                <p>Gerenciamento de celebrações</p>
+            </div>
+
+            <div class="auth-card">
+                <div id="login-heading">
+                    <h2>Bem-vindo!</h2>
+                    <p>Entre com seu nome de usuário e senha.</p>
+                </div>
+
+                <form id="login-form">
+                    <label for="login-username">Nome completo</label>
+                    <input type="text" id="login-username"
+                        placeholder="Seu nome" required>
+
+                    <label for="login-password">Senha</label>
+                    <input type="password" id="login-password"
+                        placeholder="Sua senha" required>
+
+                    <button type="submit" class="primary-button">
+                        Entrar
+                    </button>
+                </form>
+
+                <div id="signup-container" class="hidden">
+
+                    <h2>Criar uma conta</h2>
+                    <p>Preencha os dados para se cadastrar.</p>
+
+                    <form id="signup-form">
+
+                        <label for="signup-username">Nome completo</label>
+                        <input
+                            type="text"
+                            id="signup-username"
+                            placeholder="Seu nome completo"
+                            required
+                        >
+
+                        <label for="signup-password">Senha</label>
+                        <input
+                            type="password"
+                            id="signup-password"
+                            placeholder="Mínimo de 6 caracteres"
+                            minlength="6"
+                            required
+                        >
+
+                        <label for="signup-role">Tipo de conta</label>
+                        <select id="signup-role" required>
+                            <option value="">Selecione</option>
+                            <option value="ministro">Ministro</option>
+                            <option value="coordenador">Coordenador</option>
+                        </select>
+
+                        <div id="coordinator-code-container" class="hidden">
+                            <label for="coordinator-code">Código de autorização</label>
+                            <input
+                                type="password"
+                                id="coordinator-code"
+                                placeholder="Código de autorização"
+                            >
+                        </div>
+
+                        <button type="submit" class="primary-button">
+                            Cadastrar
+                        </button>
+
+                        <button type="button" id="back-to-login" class="secondary-button">
+                            Voltar ao login
+                        </button>
+
+                        <p id="signup-message" class="message"></p>
+
+                    </form>
+
+                </div>
+
+
+                <div class="auth-links">
+                    <button type="button" id="forgot-password">
+                        Esqueci minha senha
+                    </button>
+
+                    <button type="button" id="show-signup">
+                        Criar uma conta
+                    </button>
+                </div>
+                
+                <div id="recovery-container" class="hidden">
+
+                    <h2>Recuperar senha</h2>
+
+                    <p>Informe seu nome de usuário para solicitar uma nova senha.</p>
+
+                    <form id="recovery-form">
+
+                        <label for="recovery-username">Nome de usuário</label>
+
+                        <input
+                            type="text"
+                            id="recovery-username"
+                            placeholder="Seu nome completo"
+                            required
+                        >
+
+                        <button type="submit" class="primary-button">
+                            Solicitar recuperação
+                        </button>
+
+                        <button
+                            type="button"
+                            id="back-from-recovery"
+                            class="secondary-button"
+                        >
+                            Voltar ao login
+                        </button>
+
+                        <p id="recovery-message" class="message"></p>
+
+                    </form>
+
+                </div>
+
+                <p id="message" class="message" role="status"></p>
+            </div>
+        </section>
+
+        <!-- PAINEL PRINCIPAL -->
+        <section id="dashboard-screen" class="dashboard hidden">
+
+            <header class="topbar">
+                <div>
+                    <h1>Sistema de Ministros</h1>
+                    <p>Gerenciamento de celebrações</p>
+                </div>
+
+                <div class="user-info">
+                    <span id="user-name"></span>
+                    <span id="user-role"></span>
+                    <button id="profile-button" class="secondary-button">
+                        Meu perfil
+                    </button>
+                    <button id="logout-button" class="secondary-button">
+                        Sair
+                    </button>
+                </div>
+            </header>
+
+            <section class="dashboard-content">
+
+                <div class="section-heading">
+                    <div>
+                        <h2>Escala de celebrações</h2>
+                        <p>Consulte as datas e organize sua participação.</p>
+                    </div>
+
+                    <button id="add-event-button" class="primary-button hidden">
+                        + Adicionar celebração
+                    </button>
+                </div>
+                <div id="event-form-container" class="event-form-container hidden">
+
+                    <h3>Adicionar celebração</h3>
+
+                    <form id="event-form">
+
+                        <label for="event-date">Data da celebração</label>
+                        <input
+                            type="date"
+                            id="event-date"
+                            required
+                        >
+
+                        <label for="event-type">Tipo de evento</label>
+                        <select id="event-type" required>
+                            <option value="">Selecione o tipo</option>
+                            <option value="missa">Missa</option>
+                            <option value="celebracao">Celebração</option>
+                        </select>
+
+                        <div class="event-form-buttons">
+                            <button type="submit" class="primary-button">
+                                Salvar celebração
+                            </button>
+
+                            <button type="button" id="cancel-event-button" class="secondary-button">
+                                Cancelar
+                            </button>
+                        </div>
+
+                        <p id="event-message" class="message"></p>
+
+                    </form>
+
+                </div>
+
+                <div class="legend">
+                    <span><i class="legend-dot free"></i> Disponível</span>
+                    <span><i class="legend-dot assigned"></i> Assumida</span>
+                </div>
+
+                <div id="celebrations-list" class="celebrations-list">
+                    <p class="empty-message">
+                        Carregando celebrações...
+                    </p>
+                </div>
+                <!-- SOLICITAÇÕES DE RECUPERAÇÃO DE SENHA -->
+                <br><br>
+                <section id="reset-requests-section" class="event-form-container hidden">
+                    <h3>Solicitações de recuperação de senha</h3>
+                    <div id="reset-requests-list">
+                        <p class="empty-message">
+                            Carregando solicitações...
+                        </p>
+                    </div>
+                </section>
+
+                <!-- GERENCIAMENTO DE USUÁRIOS -->
+                <section id="users-section" class="event-form-container hidden">
+                    <h3>Gerenciamento de contas</h3>
+                    <p>
+                        Consulte e gerencie as contas cadastradas no sistema.
+                    </p>
+                    <div id="users-list">
+                        <p class="empty-message">
+                            Carregando usuários...
+                        </p>
+                    </div>
+                </section>
+
+            </section>
+
+        </section>
+        <br><br>
+        <!-- TELA DE PERFIL -->
+        <section id="profile-screen" class="auth-container hidden">
+
+            <div class="auth-card">
+
+                <h2>Meu perfil</h2>
+
+                <div class="profile-info">
+                    <p>Nome de usuário:</p>
+                    <strong id="profile-username"></strong><br><br>
+
+                    <p>Tipo de conta:</p>
+                    <strong id="profile-role"></strong><br>
+                </div>
+
+                <hr><br><br>
+
+                <h3>Alterar senha</h3>
+
+                <form id="change-password-form">
+
+                    <label for="new-password">Nova senha</label>
+                    <input
+                        type="password"
+                        id="new-password"
+                        placeholder="Digite a nova senha"
+                        required
+                        minlength="6"
+                    >
+
+                    <label for="confirm-password">Confirmar nova senha</label>
+                    <input
+                        type="password"
+                        id="confirm-password"
+                        placeholder="Digite novamente a senha"
+                        required
+                        minlength="6"
+                    >
+
+                    <button type="submit" class="primary-button">
+                        Salvar nova senha
+                    </button>
+
+                </form>
+
+                <button id="back-to-dashboard" class="secondary-button">
+                    Voltar ao painel
+                </button>
+
+                <p id="profile-message" class="message"></p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
